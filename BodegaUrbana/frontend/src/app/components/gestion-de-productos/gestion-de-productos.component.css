@@ -1,0 +1,492 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    color: #333333;
+    background-color: #F5F5F5;
+    overflow: hidden; /* Elimina scroll global */
+}
+
+/* Contenedor principal - Ocupa toda la pantalla */
+.admin-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* Sidebar - Altura completa */
+.admin-sidebar {
+    width: 250px;
+    background-color: #2E8B57;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 20px 0;
+    overflow-y: auto;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+}
+
+.sidebar-nav li {
+    margin: 5px 0;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.sidebar-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-nav a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-nav .active {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-left: 4px solid white;
+}
+
+.sidebar-footer {
+    padding: 15px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logout-btn {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.logout-btn:hover {
+    text-decoration: underline;
+}
+
+.logout-btn i {
+    margin-right: 10px;
+}
+
+/* Contenido principal - Ocupa espacio restante */
+.admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Barra de herramientas */
+.admin-toolbar {
+    background-color: white;
+    padding: 0 25px;
+    height: 70px;
+    min-height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn {
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background-color: #2E8B57;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #3CB371;
+}
+
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding: 10px 15px 10px 40px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    width: 250px;
+    transition: all 0.3s;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #2E8B57;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #2E8B57;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Área de contenido principal */
+.product-management {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+
+.product-management h1 {
+    color: #333;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.filter-select {
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background-color: white;
+    min-width: 200px;
+    flex: 1;
+}
+
+/* Tabla de productos */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+}
+
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1000px;
+}
+
+.products-table th, 
+.products-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.products-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #555;
+    position: sticky;
+    top: 0;
+}
+
+.products-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+.product-thumb {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Estados de stock */
+.stock {
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.in-stock {
+    background-color: #e6f7ee;
+    color: #2E8B57;
+}
+
+.low-stock {
+    background-color: #fff8e6;
+    color: #d48806;
+}
+
+.out-of-stock {
+    background-color: #fff1f0;
+    color: #f5222d;
+}
+
+/* Botones de acción */
+.btn-action {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-action.edit {
+    background-color: #e6f7ff;
+    color: #1890ff;
+}
+
+.btn-action.edit:hover {
+    background-color: #1890ff;
+    color: white;
+}
+
+.btn-action.delete {
+    background-color: #fff1f0;
+    color: #f5222d;
+}
+
+.btn-action.delete:hover {
+    background-color: #f5222d;
+    color: white;
+}
+
+/* Paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+}
+
+.page-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.page-btn:hover:not(.disabled):not(.active) {
+    background-color: #f5f5f5;
+}
+
+.page-btn.active {
+    background-color: #2E8B57;
+    color: white;
+    border-color: #2E8B57;
+}
+
+.page-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .admin-sidebar {
+        width: 220px;
+    }
+}
+
+@media (max-width: 992px) {
+    .admin-sidebar {
+        width: 70px;
+    }
+    
+    .sidebar-header h3,
+    .sidebar-nav a span,
+    .logout-btn span {
+        display: none;
+    }
+    
+    .sidebar-nav a {
+        justify-content: center;
+        padding: 15px 0;
+    }
+    
+    .sidebar-nav a i {
+        margin-right: 0;
+    }
+    
+    .admin-logo {
+        width: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-container {
+        flex-direction: column;
+    }
+    
+    .admin-sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .sidebar-nav {
+        width: 100%;
+    }
+    
+    .sidebar-nav ul {
+        display: flex;
+        justify-content: space-around;
+    }
+    
+    .sidebar-footer {
+        display: none;
+    }
+    
+    .admin-toolbar {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .toolbar-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .search-box {
+        width: 100%;
+    }
+    
+    .search-box input {
+        width: 100%;
+    }
+    
+    .product-management {
+        padding: 15px;
+    }
+    
+    .filters {
+        flex-direction: column;
+    }
+    
+    .filter-select, .btn-secondary {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .products-table th, 
+    .products-table td {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    
+    .product-thumb {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .btn-action {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .page-btn {
+        width: 32px;
+        height: 32px;
+    }
+}
