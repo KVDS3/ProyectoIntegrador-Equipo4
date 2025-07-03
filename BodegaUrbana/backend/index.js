@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // Importar rutas
-const usuariosRoutes = require('./routes/usuarios');
+const usuariosRoutes = require('./routes/cliente/usuarios');
 
 // Usar rutas
 app.use('/', usuariosRoutes);
