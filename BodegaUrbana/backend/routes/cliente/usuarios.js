@@ -10,7 +10,7 @@ router.post('/usuarios', (req, res) => {
         if (err) return res.json(err);
         res.json(result);
     });
-});
+}); 
 
 // READ
 router.get('/usuarios', (req, res) => {
