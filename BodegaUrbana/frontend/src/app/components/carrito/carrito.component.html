@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Bodega Urbana - Carrito</title>
+    <link rel="stylesheet" href="carrito.component.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+   <header class="main-header">
+        <div class="header-content">
+            <img src="logo.png" alt="Logo La Bodega Urbana" class="logo">
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Productos</a></li>
+                    <li><a href="#">Ofertas</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <a href="#"><i class="fas fa-search"></i></a>
+                <a href="/carrito" class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count">3</span></a>
+                <a href="#" class="login-link">Iniciar Sesión</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content cart-page">
+        <h1>Tu Carrito de Compras</h1>
+        
+        <div class="cart-container">
+            <div class="cart-items">
+                <!-- Producto 1 -->
+                <div class="cart-item">
+                    <img src="producto1.jpg" alt="Arroz Integral">
+                    <div class="item-details">
+                        <h3>Arroz Integral</h3>
+                        <p class="item-price">$2.99</p>
+                        <div class="item-quantity">
+                            <button class="quantity-btn">-</button>
+                            <span class="quantity">2</span>
+                            <button class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                    <button class="remove-item"><i class="fas fa-trash"></i></button>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="cart-item">
+                    <img src="producto2.jpg" alt="Aceite de Oliva">
+                    <div class="item-details">
+                        <h3>Aceite de Oliva</h3>
+                        <p class="item-price">$5.99</p>
+                        <div class="item-quantity">
+                            <button class="quantity-btn">-</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                    <button class="remove-item"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <h2>Resumen del Pedido</h2>
+                <div class="summary-details">
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>$11.97</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Envío</span>
+                        <span>$2.50</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span>$14.47</span>
+                    </div>
+                </div>
+                <button class="checkout-btn">Proceder al Pago</button>
+                <a href="home.html" class="continue-shopping">Seguir Comprando</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>contactoObodegaurbana.com</p>
+                <p>+123 456 7890</p>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="home.html">Inicio</a></li>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 La Bodega Urbana. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
