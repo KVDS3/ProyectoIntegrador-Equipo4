@@ -1,1 +1,182 @@
-<p>registro works!</p>
+<div class="registro-wrapper">
+  <div class="registro-card">
+    <div class="registro-header">
+      <div class="logo-container">
+        <img src="assets/logo.png" alt="Logo La Bodega Urbana" class="logo">
+      </div>
+      <h1>Crear Cuenta</h1>
+      <p class="subtitle">Únete a nuestra comunidad de compra sostenible</p>
+      
+      <div class="progress-container">
+        <div class="progress-steps">
+          <span *ngFor="let paso of [1,2,3,4,5]" 
+                [class.active]="paso === pasoActual" 
+                [class.completed]="paso < pasoActual">
+            {{paso}}
+          </span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width]="(pasoActual-1)*25 + '%'"></div>
+        </div>
+        <p class="step-counter">Paso {{pasoActual}} de {{totalPasos}}</p>
+      </div>
+    </div>
+
+    <form [formGroup]="registroForm" class="registro-form">
+      <!-- Paso 1: Información básica -->
+      <div class="form-step" *ngIf="pasoActual === 1">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" formControlName="nombre" placeholder="Ej: María">
+            <div *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched" class="error-message">
+              <i class="icon-warning">!</i> Mínimo 2 caracteres
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input type="text" id="apellido" formControlName="apellido" placeholder="Ej: González">
+            <div *ngIf="registroForm.get('apellido')?.invalid && registroForm.get('apellido')?.touched" class="error-message">
+              <i class="icon-warning">!</i> Mínimo 2 caracteres
+            </div>
+          </div>
+        </div>
+        
+        <button type="button" class="btn-primary" (click)="avanzarPaso()" 
+                [disabled]="!registroForm.get('nombre')?.valid || !registroForm.get('apellido')?.valid">
+          Continuar <i class="icon-arrow">→</i>
+        </button>
+      </div>
+
+      <!-- Paso 2: Credenciales -->
+      <div class="form-step" *ngIf="pasoActual === 2">
+        <div class="form-group">
+          <label for="correo">Correo electrónico</label>
+          <input type="email" id="correo" formControlName="correo" placeholder="ejemplo@correo.com">
+          <div *ngIf="registroForm.get('correo')?.invalid && registroForm.get('correo')?.touched" class="error-message">
+            <i class="icon-warning">!</i> Ingresa un correo válido
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="contraseña">Contraseña</label>
+          <div class="password-container">
+            <input type="password" id="contraseña" formControlName="contraseña" placeholder="••••••••">
+            <span class="password-strength" [class]="getPasswordStrength()"></span>
+          </div>
+          <div *ngIf="registroForm.get('contraseña')?.invalid && registroForm.get('contraseña')?.touched" class="error-message">
+            <i class="icon-warning">!</i> Mínimo 8 caracteres
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="confirmarContraseña">Confirmar Contraseña</label>
+          <input type="password" id="confirmarContraseña" formControlName="confirmarContraseña" placeholder="••••••••">
+          <div *ngIf="registroForm.hasError('notSame') && registroForm.get('confirmarContraseña')?.touched" class="error-message">
+            <i class="icon-warning">!</i> Las contraseñas no coinciden
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="retrocederPaso()">
+            <i class="icon-arrow-left">←</i> Anterior
+          </button>
+          <button type="button" class="btn-primary" (click)="avanzarPaso()" 
+                  [disabled]="!registroForm.get('correo')?.valid || !registroForm.get('contraseña')?.valid || registroForm.hasError('notSame')">
+            Continuar <i class="icon-arrow">→</i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Paso 3: Información de contacto -->
+      <div class="form-step" *ngIf="pasoActual === 3">
+        <div class="form-group">
+          <label for="direccion">Dirección</label>
+          <input type="text" id="direccion" formControlName="direccion" placeholder="Calle, número, ciudad">
+          <div *ngIf="registroForm.get('direccion')?.invalid && registroForm.get('direccion')?.touched" class="error-message">
+            <i class="icon-warning">!</i> Por favor ingresa tu dirección
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" formControlName="telefono" placeholder="10 dígitos">
+          <div *ngIf="registroForm.get('telefono')?.invalid && registroForm.get('telefono')?.touched" class="error-message">
+            <i class="icon-warning">!</i> Número de teléfono inválido
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="retrocederPaso()">
+            <i class="icon-arrow-left">←</i> Anterior
+          </button>
+          <button type="button" class="btn-primary" (click)="avanzarPaso()" 
+                  [disabled]="!registroForm.get('direccion')?.valid || !registroForm.get('telefono')?.valid">
+            Continuar <i class="icon-arrow">→</i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Paso 4: Verificación por correo -->
+      <div class="form-step" *ngIf="pasoActual === 4">
+        <div class="verificacion-container">
+          <h3>Verificación de correo electrónico</h3>
+          <p>Hemos enviado un código de verificación a <strong>{{registroForm.value.correo}}</strong></p>
+          
+          <div class="form-group">
+            <label for="codigoVerificacion">Código de verificación</label>
+            <input type="text" id="codigoVerificacion" formControlName="codigoIngresado" placeholder="6 dígitos">
+            <div *ngIf="registroForm.get('codigoIngresado')?.invalid && registroForm.get('codigoIngresado')?.touched" class="error-message">
+              <i class="icon-warning">!</i> Código requerido
+            </div>
+          </div>
+          
+          <button type="button" class="btn-primary" (click)="verificarCodigo()" 
+                  [disabled]="!registroForm.get('codigoIngresado')?.valid">
+            Verificar <i class="icon-arrow">→</i>
+          </button>
+          
+          <p class="reenviar-codigo">¿No recibiste el código? <a href="#" (click)="generarYEnviarCodigo($event)">Reenviar código</a></p>
+        </div>
+        
+        <button type="button" class="btn-secondary" (click)="retrocederPaso()">
+          <i class="icon-arrow-left">←</i> Anterior
+        </button>
+      </div>
+
+      <!-- Paso 5: Términos y condiciones -->
+      <div class="form-step" *ngIf="pasoActual === 5">
+        <div class="terminos-container">
+          <h3>Términos y Condiciones</h3>
+          <div class="terminos-content">
+            <p>Al registrarte, aceptas nuestros Términos de Servicio y Política de Privacidad.</p>
+            <p>La Bodega Urbana se compromete a proteger tus datos personales y a ofrecerte una experiencia de compra segura y sostenible.</p>
+            <!-- Contenido adicional de términos aquí -->
+          </div>
+          
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="aceptaTerminos" formControlName="aceptaTerminos">
+            <label for="aceptaTerminos">Acepto los términos y condiciones</label>
+            <div *ngIf="registroForm.get('aceptaTerminos')?.invalid && registroForm.get('aceptaTerminos')?.touched" class="error-message">
+              <i class="icon-warning">!</i> Debes aceptar los términos
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="retrocederPaso()">
+            <i class="icon-arrow-left">←</i> Anterior
+          </button>
+          <button type="button" class="btn-primary" (click)="registrarUsuario()" [disabled]="!registroForm.valid">
+            Completar Registro
+          </button>
+        </div>
+      </div>
+    </form>
+    
+    <div class="registro-footer">
+      <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión</a></p>
+    </div>
+  </div>
+</div>
