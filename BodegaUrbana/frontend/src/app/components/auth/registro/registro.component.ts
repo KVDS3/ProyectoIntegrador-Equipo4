@@ -18,6 +18,7 @@ export class RegistroComponent {
   totalPasos: number = 5;
   registroForm: FormGroup;
   codigoVerificacion: string = '';
+showSuccessModal: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -85,11 +86,20 @@ export class RegistroComponent {
   }
 
   generarYEnviarCodigo(event: Event): void {
-    event.preventDefault();
-    this.codigoVerificacion = Math.floor(100000 + Math.random() * 900000).toString();
-    console.log(`Código de verificación enviado a ${this.registroForm.value.correo}: ${this.codigoVerificacion}`);
-  }
-
+  event.preventDefault();
+  const correo = this.registroForm.get('correo')?.value;
+  
+  this.usuariosService.enviarCodigoVerificacion(correo).subscribe({
+    next: (response) => {
+      this.codigoVerificacion = response.codigo; // Asumiendo que el backend devuelve el código
+      console.log('Código enviado correctamente');
+    },
+    error: (error) => {
+      console.error('Error al enviar código:', error);
+      alert('Error al enviar el código de verificación');
+    }
+  });
+}
   verificarCodigo() {
     const codigoIngresado = this.registroForm.get('codigoIngresado')?.value;
     if (codigoIngresado === this.codigoVerificacion) {
@@ -99,29 +109,32 @@ export class RegistroComponent {
     }
   }
 
-  registrarUsuario() {
-    if (this.registroForm.valid) {
-      const usuario: Usuarios = {
-        ...this.registroForm.value,
-        verificado: true,
-        rol: 'cliente',
-        fechaRegistro: new Date()
-      };
-      
-      delete usuario.confirmarContraseña;
-      delete usuario.aceptaTerminos;
-      delete usuario.codigoIngresado;
-      
-      this.usuariosService.registrarUsuario(usuario).subscribe({
-        next: (response) => {
-          alert('Registro exitoso! Bienvenido a La Bodega Urbana.');
-          this.router.navigate(['/home']);
-        },
-        error: (error) => {
-          console.error('Error en el registro:', error);
-          alert('Hubo un error en el registro. Por favor intenta nuevamente.');
-        }
-      });
-    }
+ registrarUsuario() {
+  if (this.registroForm.valid) {
+    const usuario: Usuarios = {
+      ...this.registroForm.value,
+      verificado: true,
+      rol: 'cliente',
+      fechaRegistro: new Date()
+    };
+    
+    delete usuario.confirmarContraseña;
+    delete usuario.aceptaTerminos;
+    delete usuario.codigoIngresado;
+    
+    this.usuariosService.registrarUsuario(usuario).subscribe({
+      next: (response) => {
+        this.showSuccessModal = true; // Mostrar el modal en lugar del alert
+      },
+      error: (error) => {
+        console.error('Error en el registro:', error);
+        alert('Hubo un error en el registro. Por favor intenta nuevamente.');
+      }
+    });
   }
+}
+closeSuccessModal() {
+  this.showSuccessModal = false;
+  this.router.navigate(['#']);
+}
 }

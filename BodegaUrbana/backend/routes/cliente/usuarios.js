@@ -4,6 +4,7 @@ const { promiseDb } = require('../../db');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 
+
 // Configuración de transporte de correo
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -94,7 +95,8 @@ router.post('/usuarios/reenviar-codigo', async (req, res) => {
         
         res.json({ 
             success: true,
-            mensaje: 'Nuevo código de verificación enviado'
+            mensaje: 'Nuevo código de verificación enviado',
+            codigo // ✅ Aquí lo devuelves
         });
     } catch (error) {
         console.error('Error al reenviar código:', error);
@@ -104,6 +106,7 @@ router.post('/usuarios/reenviar-codigo', async (req, res) => {
         });
     }
 });
+
 
 // Verificación de código
 router.post('/usuarios/verificar', async (req, res) => {

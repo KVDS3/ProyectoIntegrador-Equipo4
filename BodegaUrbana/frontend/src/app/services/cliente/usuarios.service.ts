@@ -14,14 +14,11 @@ export class UsuariosService {
   registrarUsuario(usuarios: Usuarios): Observable<any> {
     return this.http.post(this.apiUrl, usuarios);
   }
+enviarCodigoVerificacion(correo: string): Observable<any> {
+  return this.http.post(`${this.apiUrl}/reenviar-codigo`, { correo });
+}
 
-  enviarCodigoVerificacion(correo: string, codigo: string): Observable<any> {
-    // Este endpoint debería existir en tu backend
-    return this.http.post(`${this.apiUrl}/enviar-codigo`, { correo, codigo });
-  }
-
-  verificarCorreo(correo: string, codigo: string): Observable<any> {
-    // Este endpoint debería existir en tu backend
-    return this.http.post(`${this.apiUrl}/verificar`, { correo, codigo });
-  }
+verificarCodigo(correo: string, codigo: string): Observable<any> {
+  return this.http.post(`${this.apiUrl}/verificar`, { correo, codigo });
+}
 }
