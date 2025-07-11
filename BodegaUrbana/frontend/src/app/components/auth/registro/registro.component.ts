@@ -135,6 +135,6 @@ showSuccessModal: boolean = false;
 }
 closeSuccessModal() {
   this.showSuccessModal = false;
-  this.router.navigate(['#']);
+  this.router.navigate(['/']);
 }
 }
